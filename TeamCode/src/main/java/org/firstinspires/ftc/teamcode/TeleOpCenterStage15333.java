@@ -39,8 +39,8 @@ public class TeleOpCenterStage15333 extends LinearOpMode {
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -56,15 +56,6 @@ public class TeleOpCenterStage15333 extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-
-            //double ForwardLeft = gamepad1.left_stick_y;
-            //double TurnRight = gamepad1.right_stick_x;
-            //double StrafeLeft = gamepad1.left_stick_x;
-
-            // frontLeft.setPower(+ForwardLeft - StrafeLeft - TurnRight);
-            // frontRight.setPower(+ForwardLeft + StrafeLeft + TurnRight);
-            // backLeft.setPower(+ForwardLeft + StrafeLeft - TurnRight);
-            // backRight.setPower(+ForwardLeft - StrafeLeft + TurnRight);
 
             //for power play in 2023 the sticsk were reversed
             //normally double y should be = -gamepad (we removed negativein 2023)
@@ -101,8 +92,8 @@ public class TeleOpCenterStage15333 extends LinearOpMode {
                 claw.setPosition(1); } */
 
             // silly claw telemetry!
-            telemetry.addData("Servo Position", claw.getPosition());
-            telemetry.update();
+           // telemetry.addData("Servo Position", claw.getPosition());
+           // telemetry.update();
         }
     }
 }
