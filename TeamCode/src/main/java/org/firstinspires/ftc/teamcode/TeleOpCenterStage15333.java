@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
@@ -47,9 +49,9 @@ public class TeleOpCenterStage15333 extends LinearOpMode {
         // silly field centric!
         // will retrieve imu from hardware map
         // specifices as radians just in case
-        BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        BHI260IMU imu = hardwareMap.get(BHI260IMU.class, "imu");
+        IMU.Parameters parameters = new Parameters();
+        parameters.imuOrientationOnRobot = BHI260IMU.Parameters.Radians;
         // without this, data retrieving from the IMU throws an exception
         imu.initialize(parameters);
 
@@ -64,7 +66,7 @@ public class TeleOpCenterStage15333 extends LinearOpMode {
             double rx = gamepad1.right_stick_x;
 
             // Read inverse IMU heading, as the IMU heading is CW positive
-            double botHeading = -imu.getAngularOrientation().firstAngle;
+            double botHeading = -imu.getRobotOrientation().firstAngle;
 
             double rotX = x * Math.cos(botHeading) - y * Math.sin(botHeading);
             double rotY = x * Math.sin(botHeading) + y * Math.cos(botHeading);
