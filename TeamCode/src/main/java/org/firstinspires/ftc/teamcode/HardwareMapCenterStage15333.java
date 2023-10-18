@@ -21,13 +21,14 @@ public class HardwareMapCenterStage15333 {
     public DcMotor frontRight;
     public DcMotor backRight;
 
+
     // lift motors
-    public DcMotor slidesLeft;
-    public DcMotor slidesRight;
+    //public DcMotor slidesLeft;
+    //public DcMotor slidesRight;
 
     // servos or claw - CR = continuous Servo
     // public CRServo claw;
-    public Servo claw = null;
+   // public Servo claw = null;
 
     //Sets variable driveTime as an integer
     int driveTime;
@@ -55,18 +56,18 @@ public class HardwareMapCenterStage15333 {
         //backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Set for PracticeBot
         //frontRight.setDirection(DcMotorSimple.Direction.REVERSE);//Competition Bot PowerPlay
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Practice Bot
-        backRight.setDirection(DcMotorSimple.Direction.FORWARD); //Competition Bot PowerPlay
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot PowerPlay
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot PowerPlay
+        backRight.setDirection(DcMotorSimple.Direction.FORWARD); //Competition Bot
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot /
 
 
         //Initialize Lift
-        slidesLeft = HWMap.dcMotor.get("slidesLeft");
-        slidesRight = HWMap.dcMotor.get("slidesRight");
+        //slidesLeft = HWMap.dcMotor.get("slidesLeft");
+        //slidesRight = HWMap.dcMotor.get("slidesRight");
 
         //Initialize Servos
         //claw = HWMap.crservo.get("claw");
-        claw = HWMap.servo.get("claw");
+        //claw = HWMap.servo.get("claw");
 
     }  //end of method InitializeRobot
 
@@ -79,7 +80,7 @@ public class HardwareMapCenterStage15333 {
       the robot to either move straight ot turn.
    */
 
-    public void DriveStraight(double power, double totalSeconds, int Direction) throws InterruptedException {
+    public void Straight(double power, double totalSeconds, int Direction) throws InterruptedException {
 
         //For driving forward or backward
         // declare variables for this method (power, totalSeconds (milliseconds) & Direction)
@@ -103,7 +104,7 @@ public class HardwareMapCenterStage15333 {
 
     } //End DriveStraight Method
 
-    public void DriveSideways(double power, long totalSeconds, int Direction) throws InterruptedException {
+    public void Sideways(double power, long totalSeconds, int Direction) throws InterruptedException {
 
         //For strafing to the left or the right
         // declare variables for this method (power, totalSeconds (milliseconds) & Direction)
@@ -253,15 +254,18 @@ public class HardwareMapCenterStage15333 {
         backLeft.setPower(0.0);
         frontRight.setPower(0.0);
         backRight.setPower(0.0);
-    }
+    }//end StopMotion Method
+  /*
     public void moveLift(double power, long totalSeconds, int Direction) throws InterruptedException{
         slidesLeft.setPower(power * Direction);
         slidesRight.setPower(power * Direction);
         Thread.sleep(totalSeconds);
 
         //lift.setPower(0);
-    }
+    }//end moveLift Method
+*/
 
+/*
     public void moveClaw(double power) throws InterruptedException{
         claw.setPosition(power);
         //Thread.sleep(totalSeconds);
@@ -270,5 +274,6 @@ public class HardwareMapCenterStage15333 {
         //slidesRight.setPower(0);
 
     }
+*/
 
 }
