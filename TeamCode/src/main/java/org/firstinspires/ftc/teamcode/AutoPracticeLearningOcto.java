@@ -32,11 +32,11 @@ public class AutoPracticeLearningOcto extends LinearOpMode {
 
         waitForStart();
 
-        Wall_E.DriveStraight(.5, 500, 1); //Forward
+        Wall_E.Straight(.5, 500, 1); //Forward
         Thread.sleep(1000);
-        Wall_E.DriveSideways(1,1000,1); //Drive Right
+        Wall_E.Sideways(1,1000,1); //Drive Right
         Thread.sleep(500);
-        Wall_E.DriveSideways(1,1500,-1); //Drive Right
+        Wall_E.Sideways(1,1500,-1); //Drive Right
         Thread.sleep(500);
         Wall_E.DiagonalForward(.5, 1000, -1); //Backward
         Thread.sleep(250);
