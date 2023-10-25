@@ -49,7 +49,7 @@ public class TeleOpCenterStage15333 extends LinearOpMode {
 
         // silly field centric!
         // will retrieve imu from hardware map
-        // specifices as radians just in case
+        // specifies as radians just in case
         BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;

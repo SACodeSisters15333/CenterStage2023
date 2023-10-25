@@ -21,7 +21,6 @@ public class HardwareMapCenterStage15333 {
     public DcMotor frontRight;
     public DcMotor backRight;
 
-
     // lift motors
     //public DcMotor slidesLeft;
     //public DcMotor slidesRight;
