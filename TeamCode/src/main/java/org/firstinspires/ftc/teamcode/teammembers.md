@@ -1,2 +1,2 @@
 Team Members:
-Ms. Juan
+Ms. Juran
