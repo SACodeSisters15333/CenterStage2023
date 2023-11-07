@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Original created by ashley.peake on 8/30/2018.
@@ -13,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 //@Disabled 
-public class HardwareMapCenterStage15333 {
+public class HardwareMapDistanceMethod {
 
     // drivetrain motors
     public DcMotor frontLeft;
@@ -29,8 +27,18 @@ public class HardwareMapCenterStage15333 {
     // public CRServo claw;
    // public Servo claw = null;
 
-    //Sets variable driveTime as an integer
-    int driveTime;
+    //Sets variable driveTime as global
+    double driveTime;
+
+    //Global Constants and Variables
+
+    //Radius of chassis wheel in centimeters to nearest tenth
+    //goBilda Mecanum lists wheels as 96 mm = 9.6cm for full diameter
+    double chassisWheelRadius=9.6/2; //divide diameter by 2 for radius
+    int chassisMotorSpeed=312; //chassis motor speed in rev per minute
+
+    //enter Rev per min of any motor - be specific about motor purpose
+
 
 
 //----------------------------Initialize Robot ---------------------------------
@@ -55,7 +63,7 @@ public class HardwareMapCenterStage15333 {
         //backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Set for PracticeBot
         //frontRight.setDirection(DcMotorSimple.Direction.REVERSE);//Competition Bot PowerPlay
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Practice Bot
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot
+        backRight.setDirection(DcMotorSimple.Direction.FORWARD); //Competition Bot
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot /
 
@@ -70,6 +78,24 @@ public class HardwareMapCenterStage15333 {
 
     }  //end of method InitializeRobot
 
+    // ---------------------------------------Determine Time needed for Distance Desired -----------
+
+    public void CalculateDriveTime(double centimeters, double radius, double power, double speed) throws InterruptedException {
+        // Calculates number of milliSeconds to move the desired amount of centimeters
+        //Global variables declared: wheelRadius; chassisMotorSpeed, circumference
+        //output to variable driveTime
+
+        double circumference; //circumference of type of wheel in use
+        long msec = 60000; //number of milliseconds in a minute (60 *1000)
+
+        circumference= (float) 2*3.14*radius;
+        driveTime = centimeters/circumference/speed*power*msec;
+
+    }//end CalculateTime
+
+
+
+
 
 //--------------------------Driving Pathways------------------------------------
 
@@ -79,10 +105,10 @@ public class HardwareMapCenterStage15333 {
       the robot to either move straight ot turn.
    */
 
-    public void Straight(double power, double totalSeconds, int Direction) throws InterruptedException {
+    public void Straight(double power, double milliSeconds, int Direction) throws InterruptedException {
 
         //For driving forward or backward
-        // declare variables for this method (power, totalSeconds (milliseconds) & Direction)
+        // declare variables for this method (power, milliSeconds (milliseconds) & Direction)
         //For forwards set direction = 1 (In method call)
         // For backwards set direction = -1 (In method call)
         //example: driveStraight(1, 5, 1) means drive straight at 100% power, for 5 seconds, in forward direction
@@ -93,7 +119,7 @@ public class HardwareMapCenterStage15333 {
         frontRight.setPower(power * Direction);
         backRight.setPower(power * Direction);
 
-        Thread.sleep((long) totalSeconds);
+        Thread.sleep((long) milliSeconds);
 
         //Stop Robot
         frontLeft.setPower(0.0);
@@ -103,10 +129,10 @@ public class HardwareMapCenterStage15333 {
 
     } //End DriveStraight Method
 
-    public void Sideways(double power, long totalSeconds, int Direction) throws InterruptedException {
+    public void Sideways(double power, long milliSeconds, int Direction) throws InterruptedException {
 
         //For strafing to the left or the right
-        // declare variables for this method (power, totalSeconds (milliseconds) & Direction)
+        // declare variables for this method (power, milliSeconds (milliseconds) & Direction)
         //For right motion set direction = 1 (In method call)
         //For left motion set direction = -1 (In method call)
         //example: driveSideways(.5, 3, 1) means drive straight at 50% power, for 3 seconds, in right direction
@@ -117,7 +143,7 @@ public class HardwareMapCenterStage15333 {
         frontRight.setPower(power * -Direction);
         backRight.setPower(power * Direction);
 
-        Thread.sleep(totalSeconds);
+        Thread.sleep(milliSeconds);
 
         // stops all motion
         frontLeft.setPower(0.0);
@@ -127,10 +153,10 @@ public class HardwareMapCenterStage15333 {
 
     } //Ends DriveSideways Method
 
-    public void DiagonalForward(double power, long totalSeconds, int Direction) throws InterruptedException {
+    public void DiagonalForward(double power, long milliSeconds, int Direction) throws InterruptedException {
 
         //For driving forward in a diagonal direction
-        // declare variables for this method (power, totalSeconds (milliseconds) & Direction)
+        // declare variables for this method (power, milliSeconds (milliseconds) & Direction)
         //For right motion set direction = 1 (In method call)
         //For left motion set direction = -1 (In method call)
         //example: DiagonalForward(.8, 3, 1) means drive straight at 80% power, for 3 seconds, in forward right direction
@@ -143,7 +169,7 @@ public class HardwareMapCenterStage15333 {
             frontRight.setPower(0);
             backRight.setPower(power * Direction);
 
-            Thread.sleep(totalSeconds);
+            Thread.sleep(milliSeconds);
         }
 
         if (Direction == -1) {
@@ -153,7 +179,7 @@ public class HardwareMapCenterStage15333 {
             frontRight.setPower(power * -Direction);
             backRight.setPower(0);
 
-            Thread.sleep(totalSeconds);
+            Thread.sleep(milliSeconds);
         }
 
         // stops all motion
@@ -166,10 +192,10 @@ public class HardwareMapCenterStage15333 {
     } //End Diagonal Forward Method
 
 
-    public void DiagonalBackward(double power, long totalSeconds, int Direction) throws InterruptedException {
+    public void DiagonalBackward(double power, long milliSeconds, int Direction) throws InterruptedException {
 
         //For driving forward in a diagonal direction
-        // declare variables for this method (power, totalSeconds (milliseconds) & Direction)
+        // declare variables for this method (power, milliSeconds (milliseconds) & Direction)
         //For right motion set direction = 1 (In method call)
         //For left motion set direction = -1 (In method call)
         //example: DiagonalBackward(.8, 3, 1) means drive straight at 80% power, for 3 seconds, in back Right direction
@@ -182,7 +208,7 @@ public class HardwareMapCenterStage15333 {
             frontRight.setPower(power * -Direction);
             backRight.setPower(0);
 
-            Thread.sleep(totalSeconds);
+            Thread.sleep(milliSeconds);
         }
 
         if (Direction == -1) {
@@ -192,7 +218,7 @@ public class HardwareMapCenterStage15333 {
             frontRight.setPower(0);
             backRight.setPower(power * Direction);
 
-            Thread.sleep(totalSeconds);
+            Thread.sleep(milliSeconds);
         }
 
         // stops all motion
@@ -205,10 +231,10 @@ public class HardwareMapCenterStage15333 {
     } //End Diagonal Backward Method
 
 
-    public void CenterSpin(double power, long totalSeconds, int Direction) throws InterruptedException {
+    public void CenterSpin(double power, long milliSeconds, int Direction) throws InterruptedException {
 
         //For turning robot on center
-        // declare variables for this method (power, totalSeconds (milliseconds) & Direction)
+        // declare variables for this method (power, milliSeconds (milliseconds) & Direction)
         //For right motion set direction = 1 (In method call)
         //For left motion set direction = -1 (In method call)
         //180 degree spin at 100% power takes -----; at 75% takes ----; at 50% takes
@@ -224,7 +250,7 @@ public class HardwareMapCenterStage15333 {
             frontRight.setPower(power * -Direction);
             backRight.setPower(power * -Direction);
 
-            Thread.sleep(totalSeconds);
+            Thread.sleep(milliSeconds);
         }
 
         if (Direction == -1) {
@@ -234,7 +260,7 @@ public class HardwareMapCenterStage15333 {
             frontRight.setPower(power * -Direction);
             backRight.setPower(power * -Direction);
 
-            Thread.sleep(totalSeconds);
+            Thread.sleep(milliSeconds);
         }
 
         // stops all motion
@@ -246,7 +272,7 @@ public class HardwareMapCenterStage15333 {
 
     } //End CenterSpin Method
 
-    public void StopMotion(double seconds) throws InterruptedException {
+    public void StopMotion(double milliseconds) throws InterruptedException {
         // stops all motion
 
         frontLeft.setPower(0.0);
@@ -255,10 +281,10 @@ public class HardwareMapCenterStage15333 {
         backRight.setPower(0.0);
     }//end StopMotion Method
   /*
-    public void moveLift(double power, long totalSeconds, int Direction) throws InterruptedException{
+    public void moveLift(double power, long milliSeconds, int Direction) throws InterruptedException{
         slidesLeft.setPower(power * Direction);
         slidesRight.setPower(power * Direction);
-        Thread.sleep(totalSeconds);
+        Thread.sleep(milliSeconds);
 
         //lift.setPower(0);
     }//end moveLift Method
@@ -267,7 +293,7 @@ public class HardwareMapCenterStage15333 {
 /*
     public void moveClaw(double power) throws InterruptedException{
         claw.setPosition(power);
-        //Thread.sleep(totalSeconds);
+        //Thread.sleep(milliSeconds);
 
         //slidesLeft.setPower(0);
         //slidesRight.setPower(0);
