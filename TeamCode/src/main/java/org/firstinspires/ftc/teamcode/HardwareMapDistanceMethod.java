@@ -34,8 +34,10 @@ public class HardwareMapDistanceMethod {
 
     //Radius of chassis wheel in centimeters to nearest tenth
     //goBilda Mecanum lists wheels as 96 mm = 9.6cm for full diameter
-    double chassisWheelRadius=9.6/2; //divide diameter by 2 for radius
-    int chassisMotorSpeed=312; //chassis motor speed in rev per minute
+    double chassisWheelRadius=10.16/2; //divide diameter by 2 for radius 4" wheel
+    double chassisMotorSpeed=79; //chassis motor speed is 312 rev per minute - account for gearing
+    //theoretical speed per website https://www.gobilda.com/strafer-chassis-kit-96mm-mecanum-wheels/ is 5.14 ft/sec
+    //based on testing of robot -- 1 sec at full power moved 37 in
 
     //enter Rev per min of any motor - be specific about motor purpose
 
@@ -63,7 +65,7 @@ public class HardwareMapDistanceMethod {
         //backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Set for PracticeBot
         //frontRight.setDirection(DcMotorSimple.Direction.REVERSE);//Competition Bot PowerPlay
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Practice Bot
-        backRight.setDirection(DcMotorSimple.Direction.FORWARD); //Competition Bot
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot /
 
@@ -85,15 +87,40 @@ public class HardwareMapDistanceMethod {
         //Global variables declared: wheelRadius; chassisMotorSpeed, circumference
         //output to variable driveTime
 
-        double circumference; //circumference of type of wheel in use
-        long msec = 60000; //number of milliseconds in a minute (60 *1000)
 
-        circumference= (float) 2*3.14*radius;
-        driveTime = centimeters/circumference/speed*power*msec;
+        //double circumference; //circumference of type of wheel in use
+        long msec = 1000; //number of milliseconds in a sec
+
+        double revSpeed; //number of revolutions based on power chosen for motor speed
+        //if full power is 312 rev per minute; then 50% power if 156 rev per minute
+        //hence speed calculation based on 156 rev per minute
+
+        revSpeed = speed*power;
+
+        double InToCmConversion = 2.54; //2.54 cm in 1 in
+
+       // circumference= (float) 2*3.14*radius;
+
+        driveTime = (centimeters/InToCmConversion)*(msec/revSpeed);
 
     }//end CalculateTime
 
 
+    public void CalculateSpinTime(double angle, double power) throws InterruptedException {
+        // Calculates number of milliSeconds to spin a specific angle in degreews
+        //output to variable driveTime
+
+        long msec = 1000; //number of milliseconds in a sec
+
+        double revSpeed; //number of revolutions based on power chosen for motor speed
+        //if full power is 270 degree per sec; then 50% power if 135 degrees per sec
+        //hence speed calculation based on 135 degrees per secon
+
+        double DegPerSec = 225; //200 degree per sec base on wheel arc since not a true center
+
+        driveTime = (angle/DegPerSec)*(msec/power);
+
+    }//end CalculateSpinTime
 
 
 
