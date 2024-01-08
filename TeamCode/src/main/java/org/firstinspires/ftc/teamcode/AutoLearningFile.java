@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 //REMINDER -- Battery Level effects Motor Power which effects timing
 
-@Autonomous (name = "LearningAutoCoding")
+@Autonomous
 
-//@Disabled
+@Disabled
 
 public class AutoLearningFile extends LinearOpMode {
 

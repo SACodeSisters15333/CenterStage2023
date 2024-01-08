@@ -29,18 +29,9 @@ public class HardwareMapDistanceMethod {
 
     //Sets variable driveTime as global
     double driveTime;
-
-    //Global Constants and Variables
-
-    //Radius of chassis wheel in centimeters to nearest tenth
-    //goBilda Mecanum lists wheels as 96 mm = 9.6cm for full diameter
-    double chassisWheelRadius=10.16/2; //divide diameter by 2 for radius 4" wheel
-    double chassisMotorSpeed=79; //chassis motor speed is 312 rev per minute - account for gearing
-    //theoretical speed per website https://www.gobilda.com/strafer-chassis-kit-96mm-mecanum-wheels/ is 5.14 ft/sec
-    //based on testing of robot -- 1 sec at full power moved 37 in
-
-    //enter Rev per min of any motor - be specific about motor purpose
-
+    double cmToMove; // desired number of centimeters for Chassis to move
+    double chassisWheelDiameter=10.16; // diameter in cm for radius 4" wheel
+    double chassisMotorSpeed=312; //chassis motor speed is 312 rev per minute - account for gearing
 
 
 //----------------------------Initialize Robot ---------------------------------
@@ -61,13 +52,11 @@ public class HardwareMapDistanceMethod {
 
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
-        //frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);//set for PracticeBot
-        //backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Set for PracticeBot
-        //frontRight.setDirection(DcMotorSimple.Direction.REVERSE);//Competition Bot PowerPlay
-        frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Practice Bot
+
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Competition Bot
         backRight.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot /
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot
 
 
         //Initialize Lift
@@ -82,26 +71,47 @@ public class HardwareMapDistanceMethod {
 
     // ---------------------------------------Determine Time needed for Distance Desired -----------
 
-    public void CalculateDriveTime(double centimeters, double radius, double power, double speed) throws InterruptedException {
-        // Calculates number of milliSeconds to move the desired amount of centimeters
-        //Global variables declared: wheelRadius; chassisMotorSpeed, circumference
-        //output to variable driveTime
+    public void CalculateDriveTime(double cmToMove, double power) throws InterruptedException {
+        /*
+        Calculates number of milliSeconds to move the desired amount of centimeters
+        Global variables declared: wheelRadius; chassisMotorSpeed, circumference
+        output to variable driveTime
 
+        Information
+        Radius of chassis wheel in centimeters to nearest tenth
+        goBilda Mecanum lists wheels as 96 mm = 9.6cm for full diameter
 
-        //double circumference; //circumference of type of wheel in use
-        long msec = 1000; //number of milliseconds in a sec
+        Chassis motors for CenterStage Spring 2024 is 312 rev per min
+        theoretical speed per website https://www.gobilda.com/strafer-chassis-kit-96mm-mecanum-wheels/ is 5.14 ft/sec
 
+        IMPORTANT -- consider Robot Weight as well as power assigned to motion (100% versus 50% versus 25 % etc)
+        Helpful to do analysis on how far robot moves in 1 sec at afull power to get a better understading
+        of the competition robots speed capability (can "ignore" rev per minute
+
+        based on testing of robot for CenterStage Spring 2024 --
+        1 sec at full power moved 37 in (this will be the conversion factor used)
+
+        */
+
+        driveTime= 0; //sets drive time to 0
+
+        //double testSpeedInches = 60; //inches moved in 1 sec at 100% power (units in/sec)
+        //double testSpeedCm = testSpeedInches*2.54;//2.54 cm in an inches - cm moved in 1 sec at 100% power (units cm/sec)
+
+        long circumference = (long) (3.14159*chassisWheelDiameter);
+
+        long msec = 60*1000; //number of milliseconds in a minute
+
+        /*  is this stuff needed?
         double revSpeed; //number of revolutions based on power chosen for motor speed
         //if full power is 312 rev per minute; then 50% power if 156 rev per minute
         //hence speed calculation based on 156 rev per minute
 
         revSpeed = speed*power;
+        */
 
-        double InToCmConversion = 2.54; //2.54 cm in 1 in
-
-       // circumference= (float) 2*3.14*radius;
-
-        driveTime = (centimeters/InToCmConversion)*(msec/revSpeed);
+        driveTime = (cmToMove/(circumference*chassisMotorSpeed))*(msec/power);
+        //driveTime = (cmToMove/testSpeedCm)*(msec/power);
 
     }//end CalculateTime
 
