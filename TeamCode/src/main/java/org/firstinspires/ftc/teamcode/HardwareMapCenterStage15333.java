@@ -54,10 +54,11 @@ public class HardwareMapCenterStage15333 {
         //frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);//set for PracticeBot
         //backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Set for PracticeBot
         //frontRight.setDirection(DcMotorSimple.Direction.REVERSE);//Competition Bot PowerPlay
-        frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Practice Bot
+        //frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Practice Bot
+
         backRight.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot /
+        //backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //PracticeBot
 
 
         //Initialize Lift
