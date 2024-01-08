@@ -31,20 +31,5 @@ public class AutoLearningFile extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-
-        //Bob.Sideways(.5, 500, -1); //Left
-        //Thread.sleep(1000);
-       // Bob.Sideways(1,1000,1); //right
-
-        Bob.CenterSpin(.5, 2667, 1);
-        Thread.sleep(500);
-
-        Bob.StopMotion(1000);
-
-       // Bob.Sideways(.5,500,1); //Right
-        //Thread.sleep(500);
-        //Bob.Straight(.5, 500, -1); //Backward
-        //Thread.sleep(250);
-
     }
 }
