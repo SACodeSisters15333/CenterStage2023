@@ -20,6 +20,7 @@ public class HardwareMapCenterStage15333 {
     public DcMotor backLeft;
     public DcMotor frontRight;
     public DcMotor backRight;
+    public DcMotor intake;
 
     // lift motors
     //public DcMotor slidesLeft;
@@ -47,18 +48,18 @@ public class HardwareMapCenterStage15333 {
         backLeft = HWMap.dcMotor.get("backLeft");
         frontRight = HWMap.dcMotor.get("frontRight");
         backRight = HWMap.dcMotor.get("backRight");
+        intake = HWMap.dcMotor.get ("intake");
 
 
-        // Reverse the right side motors
+        // Reverse the right side =
         // Reverse left motors if you are using NeveRests
         //frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);//set for PracticeBot
         //backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Set for PracticeBot
         //frontRight.setDirection(DcMotorSimple.Direction.REVERSE);//Competition Bot PowerPlay
-        //frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Practice Bot
-
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD); //Practice Bot
+        backRight.setDirection(DcMotorSimple.Direction.FORWARD); //Competition Bot
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE); //Competition Bot & PracticeBot
-        //backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //PracticeBot
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //CoRmpetition Bot & PracticeBot /
 
 
         //Initialize Lift
@@ -112,11 +113,12 @@ public class HardwareMapCenterStage15333 {
         //For left motion set direction = -1 (In method call)
         //example: driveSideways(.5, 3, 1) means drive straight at 50% power, for 3 seconds, in right direction
         //example: driveSideways(.75, 5, -1) means drive straight at 75% power, for 5 seconds, in left direction
-
-        frontLeft.setPower(power * Direction);
-        backLeft.setPower(power * -Direction);
-        frontRight.setPower(power * -Direction);
-        backRight.setPower(power * Direction);
+        if (Direction==1) {
+            frontLeft.setPower(power);
+            backLeft.setPower(power);
+            frontRight.setPower(-power);
+            backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        }
 
         Thread.sleep(totalSeconds);
 
@@ -254,7 +256,11 @@ public class HardwareMapCenterStage15333 {
         backLeft.setPower(0.0);
         frontRight.setPower(0.0);
         backRight.setPower(0.0);
+
     }//end StopMotion Method
+    public void intake (double power, long totalSeconds, int Direction) throws InterruptedException {
+        intake.setPower(0);
+    }
   /*
     public void moveLift(double power, long totalSeconds, int Direction) throws InterruptedException{
         slidesLeft.setPower(power * Direction);
