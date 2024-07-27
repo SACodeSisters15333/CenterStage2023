@@ -28,11 +28,7 @@ public class RedParkBackstageFront extends LinearOpMode {
 
         waitForStart();
 
-        Bob.Straight(.5, 100, 1); //Forward
-        Thread.sleep(500);
-        Bob.CenterSpin(.5,670,1); //turn right 90 degrees
-        Thread.sleep(500);
-        Bob. Straight(.5,3100,1); //forward
+        Bob.Sideways(0.5, 2000,-1);
         Thread.sleep(200);
     }
 }

@@ -29,7 +29,9 @@ public class RedParkBackCenter extends LinearOpMode {
         waitForStart();
 
         Bob.Straight(.5, 900, 1); //Forward
-        Thread.sleep(3000);
+        Thread.sleep(1000);
+        Bob.Straight (.5,50,-1);
+        Thread.sleep(300);
         Bob.CenterSpin(.5,710,1); //turn right 90 degrees
         Thread.sleep(500);
         Bob. Straight(.5,800,1); //forward

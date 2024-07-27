@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 //REMINDER -- Battery Level effects Motor Power which effects timing
 @Autonomous (name = "RedParkBackstageBack")
@@ -28,11 +29,25 @@ public class RedParkBackstageBack extends LinearOpMode {
 
         waitForStart();
 
-        Bob.Straight(.5, 100, 1); //Forward
-        Thread.sleep(500);
-        Bob.CenterSpin(.5,670,1); //turn right 90 degrees
-        Thread.sleep(500);
-        Bob. Straight(.5,1300,1); //forward
-        Thread.sleep(200);
+        //Bob.Sideways(.5, 4200, 1); //Forward
+
+        Bob.frontRight.setDirection(DcMotorSimple.Direction.REVERSE); //motion Backward
+        Bob.backRight.setDirection(DcMotorSimple.Direction.FORWARD); //motion Forward
+        Bob.frontLeft.setDirection(DcMotorSimple.Direction.FORWARD); //motion Backwards
+        Bob.backLeft.setDirection(DcMotorSimple.Direction.REVERSE); //CoRmpetition Bot & PracticeBot /
+
+        Bob.frontLeft.setPower(0.5);
+        Bob.frontRight.setPower(0.5);
+        Bob.backLeft.setPower(0.5);
+        Bob.backRight.setPower(0.5);
+
+        Thread.sleep(3000);
+
+        Bob.frontLeft.setPower(0);
+        Bob.frontRight.setPower(0);
+        Bob.backLeft.setPower(0);
+        Bob.backRight.setPower(0);
+
+
     }
 }
