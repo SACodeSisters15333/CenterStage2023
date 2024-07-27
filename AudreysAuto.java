@@ -1,13 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 //REMINDER -- Battery Level effects Motor Power which effects timing
-@Autonomous (name = "RedParkFrontCenter")
+
+@Autonomous (name = "AudreysAuto")
+
 //@Disabled
 
-public class RedParkFrontCenter extends LinearOpMode {
+public class AudreysAuto extends LinearOpMode {
 
     HardwareMapCenterStage15333 Bob = new HardwareMapCenterStage15333();
 
@@ -28,13 +31,14 @@ public class RedParkFrontCenter extends LinearOpMode {
 
         waitForStart();
 
-        Bob.Straight(.5, 900, 1); //Forward
-        Thread.sleep (500);
-        Bob.intake(-0.75,900,1);
-        //drop pixel
-        Bob.Straight(.5,800,-1);
+        Bob.Straight(.5, 2500, 1); //Forward
+        Thread.sleep(1000);
+        Bob.Sideways(.5,2500,-1); //Left
         Thread.sleep(500);
-       Bob.Sideways(.5,2600,1); //Left to park
-      Thread.sleep(500);
+        Bob.Sideways(.5,1000,1); //Right
+        Thread.sleep(500);
+        //.Straight(.5, 4000, -1); //Backward
+        Thread.sleep(250);
+
     }
 }

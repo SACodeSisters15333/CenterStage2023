@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 //REMINDER -- Battery Level effects Motor Power which effects timing
-@Autonomous (name = "RedParkFrontCenter")
+@Autonomous (name = "Emergency")
 //@Disabled
 
-public class RedParkFrontCenter extends LinearOpMode {
+public class RedParkBackstageBackemergency extends LinearOpMode {
 
     HardwareMapCenterStage15333 Bob = new HardwareMapCenterStage15333();
 
@@ -28,13 +28,8 @@ public class RedParkFrontCenter extends LinearOpMode {
 
         waitForStart();
 
-        Bob.Straight(.5, 900, 1); //Forward
-        Thread.sleep (500);
-        Bob.intake(-0.75,900,1);
-        //drop pixel
-        Bob.Straight(.5,800,-1);
-        Thread.sleep(500);
-       Bob.Sideways(.5,2600,1); //Left to park
-      Thread.sleep(500);
+        Bob.Straight(.5, 2500, 1); //Forward
+        Thread.sleep(100);
+
     }
 }
